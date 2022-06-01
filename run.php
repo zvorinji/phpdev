@@ -23,13 +23,13 @@ zipper("pt3.zip");
 */
 
 
-/*
+
 $file_list = array();
 
 foreach (scandir('.') as $file){
     if(strlen($file) <= 3){
         array_push($file_list, $file);
-        echo $file."   ";
+        #echo $file."   ";
 
     }
 	
@@ -58,7 +58,7 @@ function extract_file($file_name){
 
     #var_dump($json);
 
-    $fp = fopen("results_all2.csv", 'w');
+    $fp = fopen("results_all4.csv", 'a');
     $header = false;
     foreach ($json as $row){
         if (empty($header)){
@@ -86,21 +86,22 @@ foreach($file_list as $ind_file){
 
 
 
-*/
+
 
 $zip = new ZipArchive();
 
-$DelFilePath="results_all2.zip";
+$DelFilePath="results_all4.zip";
 
 
-if ($zip->open($DelFilePath, ZIPARCHIVE::CREATE) != TRUE) {
-        die ("Could not open archive");
-}
-    $zip->addFile("results_all2.csv","results_all2.csv");
+$zip->open($DelFilePath, ZIPARCHIVE::CREATE);
+$zip->addFile("results_all4.csv","results_all4.csv");
 
 // close and save archive
 
 $zip->close(); 
+
+
+unlink("results_all4.csv");
 
 
 ?>
