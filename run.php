@@ -23,7 +23,7 @@ zipper("pt3.zip");
 */
 
 
-
+/*
 $file_list = array();
 
 foreach (scandir('.') as $file){
@@ -86,11 +86,11 @@ foreach($file_list as $ind_file){
 
 
 
-
+*/
 
 $zip = new ZipArchive();
 
-$DelFilePath="results_all.zip";
+$DelFilePath="results_all2.zip";
 
 
 if ($zip->open($DelFilePath, ZIPARCHIVE::CREATE) != TRUE) {
