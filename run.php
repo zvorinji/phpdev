@@ -1,6 +1,9 @@
 <?php
 
+error_reporting(E_ALL ^ E_WARNING); 
 
+
+unlink("results_all.zip");
 /*
 function zipper($file){
     $zip = new ZipArchive;
@@ -40,7 +43,7 @@ foreach (scandir('.') as $file){
 
 
 
-function extract_file($file_name){
+function extract_file($file_name, $row_count, $file_count){
 
 
 
@@ -58,7 +61,16 @@ function extract_file($file_name){
 
     #var_dump($json);
 
-    $fp = fopen("results_all4.csv", 'a');
+    if($row_count > 980000){
+
+        $file_count++;
+        $row_count = 0;
+
+    }
+
+    $file_na = "results_all".strval($file_count).".csv";
+
+    $fp = fopen($file_na, 'a');
     $header = false;
     foreach ($json as $row){
         if (empty($header)){
@@ -68,17 +80,24 @@ function extract_file($file_name){
         }
         fputcsv($fp, array_merge($header, $row));
         #var_dump($row);
+        $row_count++;
     }
     fclose($fp);
 
     #echo $json[1][1];
 
+    return array($row_count, $file_count);
+
 }
 
+$row_count = 0;
+$file_count = 1;
 
 foreach($file_list as $ind_file){
 
-    extract_file($ind_file);
+    $return_arr = extract_file($ind_file, $row_count, $file_count);
+    $row_count = $return_arr[0];
+    $file_count = $return_arr[1];
     echo "ok";
 
 }
@@ -90,18 +109,35 @@ foreach($file_list as $ind_file){
 
 $zip = new ZipArchive();
 
-$DelFilePath="results_all4.zip";
+$DelFilePath="results_all.zip";
 
 
-$zip->open($DelFilePath, ZIPARCHIVE::CREATE);
-$zip->addFile("results_all4.csv","results_all4.csv");
+
+$j = 1;
+while($j <= $file_count){
+
+    $file_na1 = "results_all".strval($j).".csv";
+    $zip->open($DelFilePath, ZIPARCHIVE::CREATE);
+    $zip->addFile($file_na1, $file_na1);
+    $j++;
+
+}
 
 // close and save archive
 
 $zip->close(); 
 
 
-unlink("results_all4.csv");
+$i = 1;
+while($i <= $file_count){
+
+    $file_na2 = "results_all".strval($i).".csv";
+    unlink($i);
+    $i++;
+
+}
+
+
 
 
 ?>
