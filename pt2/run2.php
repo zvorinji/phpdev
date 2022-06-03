@@ -1,9 +1,9 @@
 <?php
 
-error_reporting(E_ALL ^ E_WARNING); 
+#error_reporting(E_ALL ^ E_WARNING); 
 
 
-unlink("results_all.zip");
+#unlink("results_all.zip");
 /*
 function zipper($file){
     $zip = new ZipArchive;
@@ -19,11 +19,11 @@ function zipper($file){
 
 
 
-zipper("pt1.zip");
-zipper("pt2.zip");
-zipper("pt3.zip");
+zipper("pt4.zip");
+zipper("pt5.zip");
 
 */
+
 
 
 
@@ -136,6 +136,8 @@ while($i <= $file_count){
     $i++;
 
 }
+
+
 
 
 
